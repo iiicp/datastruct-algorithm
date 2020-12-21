@@ -79,5 +79,7 @@ int main() {
   endTime = clock();
   cout << "Binary Search (Recursion): " << double(endTime - startTime) / CLOCKS_PER_SEC << " s" << endl;
 
+  delete[] a;
+
   return 0;
 }
