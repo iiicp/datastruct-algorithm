@@ -4,4 +4,4 @@ project(SortTest)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SortTest main.cpp)
+add_executable(SortTest main.cpp InsertSort.cpp SelectSort.cpp MergeSort.cpp QuickSort.cpp)

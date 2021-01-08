@@ -12,20 +12,24 @@
 #define SORTTEST_SELECTSORT_H
 
 #include <iostream>
+#include "Sort.h"
 
-void selectSort(int *arr, int n) {
+namespace Sort {
+
+  void selectSort(int *arr, int n) {
 
     if (arr == nullptr || n <= 0)
-        return;
+      return;
 
-    for (int i = 0; i < n-1; ++i) {
-        int minIndex = i;
-        for (int j = i; j < n; ++j) {
-            if (arr[j] < arr[minIndex])
-                minIndex = j;
-        }
-        std::swap(arr[i], arr[minIndex]);
+    for (int i = 0; i < n - 1; ++i) {
+      int minIndex = i;
+      for (int j = i; j < n; ++j) {
+        if (arr[j] < arr[minIndex])
+          minIndex = j;
+      }
+      std::swap(arr[i], arr[minIndex]);
     }
+  }
 }
 
 #endif //SORTTEST_SELECTSORT_H

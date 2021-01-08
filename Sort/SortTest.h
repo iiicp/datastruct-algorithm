@@ -33,6 +33,20 @@ namespace SortTest {
         return arr;
     }
 
+    int *generalNearlySortArray(int n, int swaptimes) {
+      int *arr = new int[n];
+      for (int i = 0; i < n; ++i)
+        arr[i] = i;
+
+      srand((unsigned)time(NULL));
+      for (int i = 0; i < swaptimes; ++i) {
+        int l = rand() % n;
+        int r = rand() % n;
+        std::swap(arr[l], arr[r]);
+      }
+      return arr;
+    }
+
     int *copyArray(int *arr, int len) {
         int *arr2 = new int[len];
         for (int i = 0; i < len; ++i) {
@@ -47,16 +61,6 @@ namespace SortTest {
                 return false;
         return true;
     }
-
-    void testSort(string name, void (*func)(int *arr, int len), int *arr, int len) {
-        std::cout << "test : " << name << std::endl;
-        clock_t start = clock();
-        func(arr, len);
-        clock_t end = clock();
-        assert(isSort(arr, len));
-        std::cout << "times: " << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
-    }
-
     void printArr(int *arr, int len) {
 
         if (arr == nullptr || len <= 0)
@@ -66,6 +70,16 @@ namespace SortTest {
             printf("%d ", arr[i]);
         printf("\n");
     }
+
+    void testSort(string name, void (*func)(int *arr, int len), int *arr, int len) {
+      std::cout << "test : " << name << std::endl;
+      clock_t start = clock();
+      func(arr, len);
+      clock_t end = clock();
+      assert(isSort(arr, len));
+      std::cout << "times: " << (double)(end - start)/CLOCKS_PER_SEC << std::endl;
+    }
+
 }
 
 #endif //SORTTEST_SORTTEST_H
