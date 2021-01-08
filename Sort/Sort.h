@@ -21,6 +21,7 @@ namespace Sort {
 
   void mergeSort(int *arr, int n);
   void quickSort(int *arr, int n);
+  void quickSort3Ways(int *arr, int n);
 
   void heapSort(int *arr, int n);
 }

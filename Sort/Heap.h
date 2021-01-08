@@ -92,6 +92,6 @@ namespace Sort {
   void heapSort(int *arr, int n) {
     MaxHeap<int> heap(arr, n);
     for (int i = 0; i < n; ++i)
-      arr[i] = heap.extractItem();
+      arr[n-1-i] = heap.extractItem();
   }
 }
