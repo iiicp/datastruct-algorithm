@@ -7,13 +7,15 @@
  *
  * Date:     2021/1/9
  ***********************************/
-#include "BinarySearchTree.h"
+#include "BSTree.h"
 #include "AVLTree.h"
 #include "RBTree.h"
 #include <vector>
 #include <string>
 #include <ctime>
 #include "FileOperation.h"
+#include "AVLMap.h"
+#include "AVLSet.h"
 
 using namespace std;
 
@@ -23,7 +25,7 @@ int main() {
   vector<string> words;
   if (FileOperation::readFile("../pride-and-prejudice.txt", words)) {
     std::cout << "Total words: " << words.size() << std::endl;
-
+#if 0
     int prideCnt = 0, prejudiceCnt = 0;
     for (auto &word : words) {
       if (word == "pride")
@@ -33,7 +35,7 @@ int main() {
     }
     std::cout << "Frequency of PRIDE: " << prideCnt << std::endl;
     std::cout << "Frequency of PREJUDICE: " << prejudiceCnt << std::endl;
-
+#endif
     std::cout << "-----------------Binary Search Tree----------------" << std::endl;
     clock_t start = clock();
     BST::BinarySearchTree<string, int> bst;
@@ -44,13 +46,12 @@ int main() {
       }else {
         bst.insert(word, 1);
       }
-
+    clock_t end = clock();
     for (auto &word : words)
       assert(bst.contain(word));
-    clock_t end = clock();
+    std::cout << "difference words: " << bst.size() << std::endl;
     std::cout << "Frequency of PRIDE: " << bst.search("pride") << std::endl;
     std::cout << "Frequency of PREJUDICE: " << bst.search("prejudice") << std::endl;
-    std::cout << "size: " << bst.size() << std::endl;
     std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "s" << std::endl;
 
 
@@ -64,15 +65,47 @@ int main() {
       }else {
         avl.insert(word, 1);
       }
-
+    end = clock();
     for (auto &word : words)
       assert(avl.contain(word));
-    end = clock();
+    std::cout << "difference words: " << bst.size() << std::endl;
     std::cout << "Frequency of PRIDE: " << bst.search("pride") << std::endl;
     std::cout << "Frequency of PREJUDICE: " << bst.search("prejudice") << std::endl;
-    std::cout << "size: " << bst.size() << std::endl;
     std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
 
+    std::cout << "-----------------AVLMap----------------" << std::endl;
+
+    iiicp::AVLMap<string, int> avlMap;
+    start = clock();
+    for (auto &word : words)
+      if (avlMap.contain(word)) {
+        int val = avlMap.find(word);
+        avlMap.insert(word, val + 1);
+      }else {
+        avlMap.insert(word, 1);
+      }
+    end = clock();
+
+    for (auto &word : words)
+      assert(avlMap.contain(word));
+
+    std::cout << "difference words: " << avlMap.size() << std::endl;
+    std::cout << "Frequency of PRIDE: " << avlMap.find("pride") << std::endl;
+    std::cout << "Frequency of PREJUDICE: " << avlMap.find("prejudice") << std::endl;
+    std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
+
+    std::cout << "-----------------AVLSet----------------" << std::endl;
+    iiicp::AVLSet<string> avlSet;
+    start = clock();
+    for (auto &word : words)
+      avlSet.insert(word);
+    end = clock();
+
+    for (auto &word : words)
+      assert(avlSet.contain(word));
+
+    std::cout << "difference words: " << avlSet.size() << std::endl;
+    std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
 
     std::cout << "-----------------RBTree----------------" << std::endl;
     start = clock();
@@ -84,13 +117,11 @@ int main() {
       }else {
         rbt.insert(word, 1);
       }
-
-    std::cout << "size: " << bst.size() << std::endl;
-
+    end = clock();
     for (auto &word : words) {
       assert(rbt.contain(word));
     }
-    end = clock();
+    std::cout << "difference words: " << bst.size() << std::endl;
     std::cout << "Frequency of PRIDE: " << bst.search("pride") << std::endl;
     std::cout << "Frequency of PREJUDICE: " << bst.search("prejudice") << std::endl;
     std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
