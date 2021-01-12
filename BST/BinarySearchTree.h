@@ -56,20 +56,20 @@ namespace BST {
       }
 
       /// 外层的接口不用管返回值
-      void insertNode(Key key, Value value) {
-        root = insertNode(root, key, value);
+      void insert(Key key, Value value) {
+        root = insert(root, key, value);
       }
 
-      void deleteNode(Key key) {
-        root = deleteNode(root, key);
+      void erase(Key key) {
+        root = erase(root, key);
       }
 
-      bool containNode(Key key) {
-        return containNode(root, key);
+      bool contain(Key key) {
+        return contain(root, key);
       }
 
-      Value *searchNode(Key key) {
-        return searchNode(root, key);
+      Value search(Key key) {
+        return search(root, key);
       }
 
       void preOrderTravel() {
@@ -117,16 +117,16 @@ namespace BST {
       }
 
     private:
-      Node *insertNode(Node *node, Key key, Value value) {
+      Node *insert(Node *node, Key key, Value value) {
         if (node == nullptr) {
           count++;
           return new Node(key, value);
         }
 
         if (key < node->key) {
-          node->left = insertNode(node->left, key, value);
+          node->left = insert(node->left, key, value);
         }else if (key > node->key) {
-          node->right = insertNode(node->right, key, value);
+          node->right = insert(node->right, key, value);
         }else { // update
           node->value = value;
         }
@@ -166,16 +166,16 @@ namespace BST {
         return deleteMaxNode(node->right);
       }
 
-      Node *deleteNode(Node *node, Key key) {
+      Node *erase(Node *node, Key key) {
         if (node == nullptr)
           return node;
 
         /// 分类不要分错....
         if (key < node->key) {
-          node->left = deleteNode(node->left, key);
+          node->left = erase(node->left, key);
           return node;
         }else if (key > node->key) {
-          node->right = deleteNode(node->right, key);
+          node->right = erase(node->right, key);
           return node;
         }else {
           /// 删除节点
@@ -192,7 +192,7 @@ namespace BST {
           } else {
             Node *successor = new Node(minimum(node->right));
             /// 移除右边的最小值
-            successor->right = deleteMinNode(node->right);
+            successor->right = erase(node->right, successor->key);
             successor->left = node->left;
             delete node;
             return successor;
@@ -255,27 +255,27 @@ namespace BST {
         }
       }
 
-      bool containNode(Node *node, Key key) {
+      bool contain(Node *node, Key key) {
         if (node == nullptr)
           return false;
 
         if (node->key == key)
           return true;
         else if (key < node->key)
-          return containNode(node->left, key);
+          return contain(node->left, key);
         else
-          return containNode(node->right, key);
+          return contain(node->right, key);
       }
 
-      Value *searchNode(Node *node, Key key) {
+      Value search(Node *node, Key key) {
         if (node == nullptr)
-          return nullptr;
+          return 0;
         if (key == node->key)
-          return &node->value;
+          return node->value;
         else if (key < node->key)
-          return searchNode(node->left, key);
+          return search(node->left, key);
         else
-          return searchNode(node->right, key);
+          return search(node->right, key);
       }
   };
 }

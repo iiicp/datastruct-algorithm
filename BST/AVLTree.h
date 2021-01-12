@@ -72,8 +72,11 @@ namespace BST {
     }
 
     bool contain(Key key) {
-      assert(root);
       return contain(root, key);
+    }
+
+    Value search(Key key) {
+      return search(root, key);
     }
 
     void destroy() {
@@ -343,6 +346,17 @@ namespace BST {
       if (node == nullptr)
         return 0;
       return getNodeHeight(node->left) - getNodeHeight(node->right);
+    }
+
+    Value search(Node *node, Key key) {
+      if (node == nullptr)
+        return 0;
+      if (key == node->key)
+        return node->value;
+      else if (key < node->key)
+        return search(node->left, key);
+      else
+        return search(node->right, key);
     }
   };
 }
