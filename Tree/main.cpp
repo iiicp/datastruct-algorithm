@@ -16,11 +16,13 @@
 #include "FileOperation.h"
 #include "AVLMap.h"
 #include "AVLSet.h"
+#include "SegmentTree.h"
+#include "SegmentTree2.h"
+#include "Trie.h"
 
 using namespace std;
 
-int main() {
-
+void bstTreeTest() {
   std::cout << "Pride and Prejudice" << std::endl;
   vector<string> words;
   if (FileOperation::readFile("../pride-and-prejudice.txt", words)) {
@@ -125,7 +127,66 @@ int main() {
     std::cout << "Frequency of PRIDE: " << bst.search("pride") << std::endl;
     std::cout << "Frequency of PREJUDICE: " << bst.search("prejudice") << std::endl;
     std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
-  }
 
+    std::cout << "-----------------Trie----------------" << std::endl;
+
+    start = clock();
+    Trie tri;
+    for (auto &word : words)
+      tri.add(word);
+    end = clock();
+
+    for (auto &word : words) {
+      assert(tri.contains(word));
+    }
+
+    std::cout << "difference words: " << tri.size() << std::endl;
+    std::cout << "Frequency of PRIDE: " << tri.contains("pride") << std::endl;
+    std::cout << "Frequency of PREJUDICE: " << tri.contains("prejudice") << std::endl;
+    std::cout << "times: " << (double)(end-start)/CLOCKS_PER_SEC << "ms" << std::endl;
+  }
+}
+
+void segmentTreeTest() {
+    vector<int> element{1,3,5};
+    BST::SegmentTree<int> segmentTree(element, [](int a,int b){return a + b;});
+    segmentTree.printTree();
+
+    std::cout << segmentTree.query(0, 2) << std::endl;
+    segmentTree.update(1,2);
+    std::cout << segmentTree.query(0, 2) << std::endl;
+
+    vector<int> element2{1,3,5};
+    SegmentTree2<int> segmentTree2(element, [](int a,int b){return a + b;});
+    segmentTree2.printTree();
+
+    std::cout << segmentTree2.query(0, 2) << std::endl;
+    segmentTree2.update(1,2);
+    std::cout << segmentTree2.query(0, 2) << std::endl;
+}
+
+void trieTest() {
+  Trie tr;
+  tr.add("hello");
+  tr.add("world");
+  tr.add("hell");
+  tr.add("hel");
+
+  assert(tr.contains("hell"));
+  assert(tr.contains("hel"));
+  assert(tr.contains("world"));
+  assert(tr.contains("hello"));
+
+  assert(tr.isPrefix("h"));
+  assert(tr.isPrefix("hel"));
+  assert(tr.isPrefix("worl"));
+
+  std::cout << "ok..." << std::endl;
+}
+
+int main() {
+  segmentTreeTest();
+  ///trieTest();
+  ///bstTreeTest();
   return 0;
 }

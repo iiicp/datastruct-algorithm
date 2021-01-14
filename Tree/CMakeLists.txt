@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
-project(BST)
+project(Tree)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BST main.cpp)
+add_executable(Tree main.cpp)
