@@ -137,6 +137,11 @@ namespace BST {
         return x;
     }
 
+    /**
+     *      黑      flipColor       红
+     *    /   \     ==>           /   \
+     *   红    红                黑    黑
+     */
     void flipColors(Node *node) {
         node->color = Color::red;
         node->left->color = Color::black;

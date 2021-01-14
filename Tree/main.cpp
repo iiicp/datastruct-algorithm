@@ -19,6 +19,8 @@
 #include "SegmentTree.h"
 #include "SegmentTree2.h"
 #include "Trie.h"
+#include "Heap.h"
+#include "UF.h"
 
 using namespace std;
 
@@ -184,9 +186,39 @@ void trieTest() {
   std::cout << "ok..." << std::endl;
 }
 
+void heapTest() {
+  vector<int> data{2,1,5,3,9,4};
+  Heap<int> hp(data);
+  for (int i = 0; i < data.size(); ++i)
+    std::cout << hp.extractElement() << " ";
+  std::cout << std::endl;
+
+  std::cout << "---------- use add op -----------" << std::endl;
+
+  Heap<int> hp2(data.size());
+  for (int i = 0; i < data.size(); ++i)
+    hp2.add(data[i]);
+  for (int i = 0; i < data.size(); ++i)
+    std::cout << hp2.extractElement() << " ";
+  std::cout << std::endl;
+}
+
+void unionFindTest() {
+  UF uf(5);
+  uf.unionElement(0,2);
+  uf.unionElement(3,4);
+
+  std::cout << uf.isConnected(2,4) << std::endl;
+  uf.unionElement(1,4);
+  uf.unionElement(0,1);
+  std::cout << uf.isConnected(0,4) << std::endl;
+}
+
 int main() {
-  segmentTreeTest();
+  ///segmentTreeTest();
   ///trieTest();
   ///bstTreeTest();
+  ///heapTest();
+  unionFindTest();
   return 0;
 }
