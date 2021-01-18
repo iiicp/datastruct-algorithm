@@ -21,6 +21,7 @@
 #include "Trie.h"
 #include "Heap.h"
 #include "UF.h"
+#include "UF_old.h"
 
 using namespace std;
 
@@ -204,14 +205,37 @@ void heapTest() {
 }
 
 void unionFindTest() {
-  UF uf(5);
-  uf.unionElement(0,2);
-  uf.unionElement(3,4);
 
-  std::cout << uf.isConnected(2,4) << std::endl;
-  uf.unionElement(1,4);
-  uf.unionElement(0,1);
-  std::cout << uf.isConnected(0,4) << std::endl;
+  int size = 10000000;
+  UF uf(size);
+  UF_OLD uf2(size);
+  srand(time(NULL));
+
+  std::cout << "路径优化...." << std::endl;
+  clock_t start = clock();
+  for (int i = 0; i < size; ++i) {
+    uf.unionElement(rand()%size, rand()%size);
+  }
+
+  for (int i = 0; i < size; ++i) {
+    uf.isConnected(rand()%size, rand()%size);
+  }
+  clock_t end = clock();
+
+  std::cout << (double)(end - start) / CLOCKS_PER_SEC << "s" << std::endl;
+
+
+  std::cout << "没有路径优化...." << std::endl;
+  start = clock();
+  for (int i = 0; i < size; ++i) {
+    uf2.unionElement(rand()%size, rand()%size);
+  }
+
+  for (int i = 0; i < size; ++i) {
+    uf2.isConnected(rand()%size, rand()%size);
+  }
+  end = clock();
+  std::cout << (double)(end - start) / CLOCKS_PER_SEC << "s" << std::endl;
 }
 
 int main() {

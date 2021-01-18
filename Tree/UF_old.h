@@ -8,17 +8,17 @@
  * Date:     2021/1/14
  ***********************************/
 
-#ifndef TREE_UNIONFIND_H
-#define TREE_UNIONFIND_H
+#ifndef TREE_UNIONFIND_OLD_H
+#define TREE_UNIONFIND_OLD_H
 
 #include <vector>
 using namespace std;
-class UF {
+class UF_OLD {
 private:
   vector<int> parent;
   vector<int> rank; /// 基于rank优化，合并两颗树
 public:
-  UF(int size) {
+  UF_OLD(int size) {
     assert(size > 0);
     parent = vector<int>(size, 0);
     rank = vector<int>(size, 1);
@@ -58,7 +58,7 @@ private:
   /// 查找p所对应的区域的根
   int find(int p) {
     while (parent[p] != p) {
-      parent[p] = parent[parent[p]]; /// 路径压缩
+      //parent[p] = parent[parent[p]]; /// 路径压缩
       p = parent[p];
     }
     return p;
